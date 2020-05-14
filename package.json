@@ -4,13 +4,14 @@
   "description": "test proxying image requests",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -w server.js"
+    "start": "nodemon --inspect -w server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "http-proxy": "^1.18.0"
+    "http-proxy": "^1.18.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

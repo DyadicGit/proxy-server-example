@@ -1,6 +1,7 @@
 const express = require('express')
 const http = require('http')
 const httpProxy = require('http-proxy')
+const fetch = require('node-fetch');
 const app = express()
 
 const proxy = httpProxy.createProxyServer({});
@@ -17,7 +18,7 @@ proxy.on('error', function (err, req, res) {
   res.writeHead(500, {
     'Content-Type': 'text/plain'
   });
-  res.end("Oops");
+  res.end(err.message);
 });
 
 proxy.on('proxyRes', function(proxyRes, req, res) {
@@ -29,6 +30,19 @@ proxy.on('proxyRes', function(proxyRes, req, res) {
 
 app.get('/hello', (req, res) => {
   return res.json({ text: 'Hello World!' });
+})
+
+app.get('/image/:imageUrl', async (req, res) => {
+  const options = {
+    method: 'get',
+    headers: { 'accept': 'image/*' },
+  }
+  const { imageUrl } = req.params
+  const response = await fetch(decodeURIComponent(imageUrl), options);
+  const type = response.headers.get('content-type')
+  const buffer = await response.buffer()
+  const base64 = buffer.toString('base64')
+  res.send('data:'+type+';base64,'+base64)
 })
 const apiServerPort = 5000
 app.listen(apiServerPort, () => console.log(`Api server on http://localhost:${apiServerPort}`))
