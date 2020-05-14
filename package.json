@@ -1,0 +1,21 @@
+{
+  "name": "proxy-server",
+  "version": "1.0.0",
+  "description": "test proxying image requests",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon -w server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "nodemonConfig": {
+    "restartable": "r"
+  }
+}
